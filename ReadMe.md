@@ -1,10 +1,9 @@
 ## Getting Started
 
 After cloning repo
-https://github.com/ZiyaadLakay/art-gallery.git
 
 ```bash
-git clone
+git clone https://github.com/ZiyaadLakay/art-gallery.git
 ```
 
 Make sure you have python installed
@@ -13,7 +12,7 @@ Make sure you have python installed
 # first do:
 sudo apt-get update
 # after do:
-sudo apt-get install python3.<latest version>
+sudo apt-get install python3.[latest version]
 ```
 
 or for Windows go to https://www.python.org/downloads/
@@ -36,4 +35,16 @@ Then install packages
 
 ```bash
 pip3 install flask
+```
+
+Then tell flask how to import your application
+
+```bash
+export FLASK_APP=server.py
+```
+
+Then run your application
+
+```bash
+flask run
 ```
