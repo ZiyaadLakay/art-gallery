@@ -1,6 +1,6 @@
 $.ajax({
-  url: `https://collectionapi.metmuseum.org/public/collection/v1/objects`, //PHP file to execute
-  type: "GET", //method used POST or GET
+  url: `https://collectionapi.metmuseum.org/public/collection/v1/objects`,
+  type: "GET",
   success: function (result) {
     console.log(result);
   },
