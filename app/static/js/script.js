@@ -1,5 +1,3 @@
-let ids = Array.from(Array(200).keys());
-
 $.ajax({
   url: `https://collectionapi.metmuseum.org/public/collection/v1/objects`, //PHP file to execute
   type: "GET", //method used POST or GET
@@ -13,26 +11,53 @@ $.ajax({
 }).then((response) => {
   $.each(response["objectIDs"].slice(1, 500), (i, item) => {
     $.ajax({
-      url: `https://collectionapi.metmuseum.org/public/collection/v1/objects/${item}`, //PHP file to execute
-      type: "GET", //method used POST or GET
+      url: `https://collectionapi.metmuseum.org/public/collection/v1/objects/${item}`,
+      type: "GET",
+      beforeSend: function () {
+        $("#loading-image").show();
+      },
       success: function (result) {
-        console.log(result);
+        console.log("results ", result.primaryImage);
         if (result.primaryImage !== "") {
           $(
-            '<div class="item"><img src="' +
-              result.primaryImage +
-              '"><div class="carousel-caption"></div>   </div>'
+            `<div class="item">
+
+              <img class="image-art" src="${result.primaryImage}" data-toggle="modal" data-target="#${result.objectID}">
+
+            </div>
+            <!-- Modal -->
+              <div class="modal fade" id="${result.objectID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="${result.objectID}">${result.title}</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <ul style="list-style-type: none;">
+                      <li><strong>Artist</strong> : ${result.artistDisplayName}</li>
+                      <li><strong>Artist Bio</strong> : ${result.artistDisplayBio}</li>
+                      <li><strong>Department</strong> : ${result.department}</li>
+                      <li><strong>Period</strong> : ${result.period}</li>
+                      <li><strong>Object</strong> : ${result.objectName}</li>
+                      <li><strong>Date</strong> : ${result.objectDate}</li>
+                      <li><strong>Country</strong> : ${result.country}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            `
           ).appendTo(".carousel-inner");
-          $(
-            '<li data-target="#carousel-example-generic" data-slide-to="' +
-              item +
-              '"></li>'
-          ).appendTo(".carousel-indicators");
+          $("#loading-image").hide();
         }
       },
 
       error: function (result, statut, error) {
-        console.log(result);
+        console.log("Did not retrieve");
       },
     });
   });
