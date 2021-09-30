@@ -11,7 +11,7 @@ $.ajax({
 }).then((response) => {
   $.each(response["objectIDs"].slice(1, 500), (i, item) => {
     $.ajax({
-      url: `https://ziyaad-cors.herokuapp.com/https://collectionapi.metmuseum.org/public/collection/v1/objects/${item}`,
+      url: `https://collectionapi.metmuseum.org/public/collection/v1/objects/${item}`,
       type: "GET",
       beforeSend: function () {
         $("#loading-image").show();
